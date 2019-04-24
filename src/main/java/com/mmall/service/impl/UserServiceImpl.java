@@ -7,7 +7,6 @@ import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
-import org.apache.commons.configuration.plist.Token;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -156,7 +155,7 @@ public class UserServiceImpl implements IUserService {
 
 
     public ServerResponse<User> updateInformation(User user){
-        //username不能被更新
+        //username和userId不能被更新
         //email需要校验是否已存在且不是当前用户的
         int resultCount = userMapper.checkEmailByUserId(user.getEmail(), user.getId());
         if(resultCount > 0){
@@ -170,6 +169,7 @@ public class UserServiceImpl implements IUserService {
         updateUser.setQuestion(user.getQuestion());
         updateUser.setAnswer(user.getAnswer());
 
+        //保证只更新这几个信息
         int updateCount = userMapper.updateByPrimaryKeySelective(updateUser);
         if(updateCount > 0){
             return ServerResponse.createBySuccess("更新个人信息成功", updateUser);

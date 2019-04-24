@@ -6,7 +6,6 @@ import com.google.common.cache.LoadingCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,11 +18,15 @@ public class TokenCache {
     public static final String TOKEN_PREFIX ="token_";
 
     private static LoadingCache<String, String> localCache = CacheBuilder.newBuilder()
-            .initialCapacity(1000).maximumSize(10000).expireAfterAccess(12, TimeUnit.HOURS)
+            .initialCapacity(1000)//缓存初始化容量
+            .maximumSize(10000)//缓存容量超过时Guava使用LRU算法移除
+            .expireAfterAccess(12, TimeUnit.HOURS)//缓存有效期12小时
             .build(new CacheLoader<String, String>() {
+                //匿名实现类
                 //默认的数据加载实现:调用get时,key没有对应的值,就调用这个方法加载
                 @Override
                 public String load(String s) throws Exception {
+                    //避免判断时null.equals出现空指针异常,使用字符串null
                     return "null";
         }
     });
