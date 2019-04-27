@@ -156,15 +156,18 @@ public class ProductManageController {
 
     @RequestMapping("richtext_img_upload.do")
     @ResponseBody
+    //富文本上传
     public Map richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
 
         /*
-        富文本对返回值有自己的要求,我们使用simditor需按要求进行返回Map
+        富文本对返回值有自己的要求,我们使用simditor(前端插件)需按要求进行返回Map
         {
           "success": true/false,
           "msg": "error message", # optional
           "file_path": "[real file path]"
         }
+        以及responseHeader:
+        response.addHeader("Access-Control-Allow-Headers", "X-File=Name");
          */
         Map resultMap = Maps.newHashMap();
 
@@ -189,6 +192,8 @@ public class ProductManageController {
             resultMap.put("success",true);
             resultMap.put("msg", "上传成功");
             resultMap.put("file_path", url);
+
+            //要求处理responseHeader
             response.addHeader("Access-Control-Allow-Headers", "X-File=Name");
             return resultMap;
 

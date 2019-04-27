@@ -17,7 +17,7 @@ public class DateTimeUtil {
     public static final  String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public static Date strToDate(String dateTimeStr){
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(STANDARD_FORMAT);
         DateTime dateTime = dateTimeFormatter.parseDateTime(dateTimeStr);
         return dateTime.toDate();
     }
@@ -27,7 +27,7 @@ public class DateTimeUtil {
             return StringUtils.EMPTY;
         }
         DateTime dateTime = new DateTime(date);
-        return dateTime.toString("yyyy-MM-dd HH:mm:ss");
+        return dateTime.toString(STANDARD_FORMAT);
     }
 
     public static Date strToDate(String dateTimeStr, String formatStr){

@@ -17,6 +17,8 @@ public class ProductDetailVo {
     private BigDecimal price;
     private Integer stock;
     private Integer status;
+
+    //时间使用yi'y易于展示的字符串
     private String createTime;
     private String updateTime;
 

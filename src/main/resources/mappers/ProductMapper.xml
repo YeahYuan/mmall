@@ -202,12 +202,14 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM mmall_product
+--         必须是在线的商品
         WHERE status = 1
         <if test="productName != null">
             AND name LIKE #{productName}
         </if>
         <if test="categoryIdList != null">
             and category_id in
+--             Mybatis对List遍历的实现方法
             <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
               #{item}
             </foreach>

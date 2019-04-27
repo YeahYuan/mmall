@@ -35,6 +35,7 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    //平级调用
     @Autowired
     private ICategoryService iCategoryService;
 
@@ -91,7 +92,6 @@ public class ProductServiceImpl implements IProductService {
         if (productId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-
         Product product = productMapper.selectByPrimaryKey(productId);
         if (product == null) {
             return ServerResponse.createByErrorMessage("产品已下架或者删除");
@@ -134,6 +134,7 @@ public class ProductServiceImpl implements IProductService {
 
     public ServerResponse<PageInfo> getProductList(int pageNum, int pageSize) {
         /*
+        两个参数:int pageNum, int pageSize(第几页,每页几个)
         PageHelper使用步骤:
         1.startPage--start
         2.填充自己的sql查询逻辑
@@ -146,6 +147,8 @@ public class ProductServiceImpl implements IProductService {
             ProductListVo productListVo = assembleProductListVo(productItem);
             productListVoList.add(productListVo);
         }
+        //创建使用原始pojo的List,避免出错
+        //再set包装vo的List
         PageInfo pageResult = new PageInfo(productList);
         pageResult.setList(productListVoList);
         return ServerResponse.createBySuccess(pageResult);
@@ -186,6 +189,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
 
+//前台功能-------------------------------------------
+
+    //与后台的detail类似,但需要判断产品status
     public ServerResponse<ProductDetailVo> getProductDetail(Integer productId) {
         if (productId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -218,7 +224,7 @@ public class ProductServiceImpl implements IProductService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        List<Integer> categoryIdList = new ArrayList<Integer>();
+        List<Integer> categoryIdList = new ArrayList<>();
 
         if (categoryId != null) {
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
@@ -239,15 +245,17 @@ public class ProductServiceImpl implements IProductService {
         PageHelper.startPage(pageNum, pageSize);
         //排序处理
         if (StringUtils.isNotBlank(orderBy)) {
+            //Set.contains比List.constains的时间复杂度 小,所以Const中使用Set
             if (Const.ProductListOrderBy.PRICE_ASC_DESC.contains(orderBy)) {
                 //可以直接用空格替换_吗??
                 String[] orderByArray = orderBy.split("_");
+                //Pagehelper中是用price asc 空格连接
                 PageHelper.orderBy(orderByArray[0] + " " + orderByArray[1]);
             }
         }
 
-        List<Product> productList = productMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword,
-                categoryIdList.size() == 0 ? null : categoryIdList);
+        List<Product> productList = productMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword,//空转成null
+                categoryIdList.size() == 0 ? null : categoryIdList);//为空的话in里没有值,要转成null
         List<ProductListVo> productListVoList = Lists.newArrayList();
         for (Product productItem : productList) {
             ProductListVo productListVo = assembleProductListVo(productItem);

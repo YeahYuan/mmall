@@ -3,7 +3,6 @@ package com.mmall.service.impl;
 import com.google.common.collect.Lists;
 import com.mmall.service.IFileService;
 import com.mmall.util.FTPUtil;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,14 +22,19 @@ public class FileServiceImpl implements IFileService {
 
     public String upload(MultipartFile file, String path) {
         String fileName = file.getOriginalFilename();
+        //获取文件后缀名
         String fileExtensionName = fileName.substring(fileName.lastIndexOf(".") + 1);
+        //设置上传文件名,避免name相同导致覆盖
         String uploadFileName = UUID.randomUUID().toString() + "." + fileExtensionName;
 
         logger.info("开始上传文件,上传文件的文件名:{},上传的路径:{},新文件名:{}", fileName, path, uploadFileName);
 
         File fileDir = new File(path);
+        //如果文件不存在
         if(!fileDir.exists()){
+            //首先赋予可写的权限
             fileDir.setWritable(true);
+            //创建所有文件夹,mkdir仅创建当前的
             fileDir.mkdirs();
         }
         File targetFile = new File(path, uploadFileName);

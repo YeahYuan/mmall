@@ -10,9 +10,10 @@ import java.util.Set;
 public class Const {
     public static final String CURRENT_USER = "currentUser";
 
-    public static final String EMAIL = "email";
+
     public static final String USERNAME = "username";
 
+    //Set.contains比List.constains的时间复杂度 小,所以Const中使用Set
     public interface ProductListOrderBy {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc", "price_asc");
     }
