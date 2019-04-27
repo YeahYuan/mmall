@@ -133,6 +133,7 @@
   </select>
 
   <select id="selectCartProductCheckedStatusByUserId" parameterType="int" resultType="int">
+-- 查询没勾选的数量
     SELECT count(1)
     FROM mmall_cart
     WHERE checked = 0

@@ -78,6 +78,7 @@ public class CartServiceImpl implements ICartService {
 
     public ServerResponse<CartVo> deleteProduct(Integer userId, String productIds){
 
+        //字符串-->List
         List<String> productIdList = Splitter.on(",").splitToList(productIds);
 
         if(CollectionUtils.isEmpty(productIdList)){
@@ -115,16 +116,20 @@ public class CartServiceImpl implements ICartService {
 
     /*
     购物车核心方法
+    限制库存
+    计算选中商品的总价
      */
     private CartVo getCartVoLimit(Integer userId){
         CartVo cartVo = new CartVo();
         List<Cart> cartList = cartMapper.selectCartByUserId(userId);
         List<CartProductVo> cartProductVoList = Lists.newArrayList();
 
+        //初始化购物车总价
         BigDecimal cartTotalPrice = new BigDecimal("0");
 
         if(CollectionUtils.isNotEmpty(cartList)){
             for(Cart cartItem : cartList){
+                //组装cart信息
                 CartProductVo cartProductVo = new CartProductVo();
                 cartProductVo.setId(cartItem.getId());
                 cartProductVo.setUserId(userId);
@@ -132,6 +137,7 @@ public class CartServiceImpl implements ICartService {
 
                 Product product = productMapper.selectByPrimaryKey(cartItem.getProductId());
                 if(product != null){
+                    //组装Product信息
                     cartProductVo.setProductMainImage(product.getMainImage());
                     cartProductVo.setProductName(product.getName());
                     cartProductVo.setProductSubtitle(product.getSubtitle());
@@ -158,7 +164,7 @@ public class CartServiceImpl implements ICartService {
 
                     }
                     cartProductVo.setQuantity(buyLimitCount);
-                    //计算总价
+                    //计算购物车中该产品的总价
                     cartProductVo.setProductTotalPrice(BigDecimalUtil.mul(product.getPrice().doubleValue(), cartProductVo.getQuantity()));
                     cartProductVo.setProductChecked(cartItem.getChecked());
                 }
@@ -171,6 +177,7 @@ public class CartServiceImpl implements ICartService {
                 cartProductVoList.add(cartProductVo);
             }
         }
+        //组装CartVo
         cartVo.setCartTotalPrice(cartTotalPrice);
         cartVo.setCartProductVoList(cartProductVoList);
         cartVo.setAllChecked(this.getAllCheckedStatus(userId));
