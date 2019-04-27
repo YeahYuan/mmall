@@ -54,12 +54,14 @@ public class ProductServiceImpl implements IProductService {
                 if (rowCount > 0) {
                     return ServerResponse.createBySuccessMessage("更新产品成功");
                 }
+                //老师写的是success?
                 return ServerResponse.createByErrorMessage("更新产品失败");
             } else {
                 int rowCount = productMapper.insert(product);
                 if (rowCount > 0) {
                     return ServerResponse.createBySuccessMessage("新增产品成功");
                 }
+                //老师写的是success?
                 return ServerResponse.createByErrorMessage("新增产品失败");
             }
         }
@@ -95,6 +97,7 @@ public class ProductServiceImpl implements IProductService {
             return ServerResponse.createByErrorMessage("产品已下架或者删除");
         }
 
+        //vo--value object
         ProductDetailVo productDetailVo = assembleProductDetailVo(product);
         return ServerResponse.createBySuccess(productDetailVo);
     }

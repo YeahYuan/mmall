@@ -20,6 +20,7 @@ public class ProductDetailVo {
     private String createTime;
     private String updateTime;
 
+    //比Product多的两个
     private String imageHost;
     private Integer parentCategoryId;
 
