@@ -34,6 +34,10 @@ public class ShippingServiceImpl implements IShippingService {
         return ServerResponse.createByErrorMessage("新建地址失败");
     }
 
+    /*
+    删除\更新\查询等操作需要判断userId,重写mapper的方法,在dao层添加where userId = xx
+     */
+
     public ServerResponse delete(Integer userId, Integer shippingId){
         int rowCount = shippingMapper.deleteByShippingIdUserId(userId, shippingId);
         if(rowCount > 0){

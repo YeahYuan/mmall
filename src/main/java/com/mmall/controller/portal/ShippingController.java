@@ -29,6 +29,7 @@ public class ShippingController {
     @RequestMapping("add.do")
     @ResponseBody
     public ServerResponse add(HttpSession session, Shipping shipping){
+        //可以直接接收前端传过来的对象具体信息绑定为一个对象---SpringMVC数据绑定中对象绑定
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());

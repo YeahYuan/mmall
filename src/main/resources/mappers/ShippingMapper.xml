@@ -31,6 +31,8 @@
     delete from mmall_shipping
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <!--useGeneratedKeys="true" keyProperty="id":t操作完成后立刻返回自动生成的主键(id)-->
   <insert id="insert" parameterType="com.mmall.pojo.Shipping" useGeneratedKeys="true" keyProperty="id">
     insert into mmall_shipping (id, user_id, receiver_name, 
       receiver_phone, receiver_mobile, receiver_province, 
@@ -185,6 +187,7 @@
   
   <update id="updateByShipping" parameterType="com.mmall.pojo.Shipping">
     update mmall_shipping
+--     userId不能修改,仅作为判断条件
     set receiver_name = #{receiverName,jdbcType=VARCHAR},
       receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
       receiver_mobile = #{receiverMobile,jdbcType=VARCHAR},
