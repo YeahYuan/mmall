@@ -15,6 +15,7 @@ public class OrderItemVo {
     private BigDecimal currentUnitPrice;
     private Integer quantity;
     private BigDecimal totalPrice;
+    //方便前端展示,时间都改为String类型
     private String createTime;
 
     public String  getCreateTime() {

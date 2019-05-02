@@ -7,6 +7,7 @@ import java.util.List;
  * Created by lll on 19/4/13.
  */
 public class OrderProductVo {
+    //用户预下单时使用
     private List<OrderItemVo> orderItemVoList;
     private BigDecimal productTotalPrice;
     private String imageHost;

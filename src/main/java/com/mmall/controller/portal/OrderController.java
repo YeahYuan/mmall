@@ -107,9 +107,14 @@ public class OrderController{
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
+
+        //得到upload文件夹的路径,把自动生成的二维码图片传到ftp服务器上,把图片地址返回给前端,前端进行展示
         String path = request.getSession().getServletContext().getRealPath("upload");
         return iOrderService.pay(orderNo, user.getId(), path );
     }
+
+
+
 
     @RequestMapping("alipay_callback.do")
     @ResponseBody
@@ -117,6 +122,7 @@ public class OrderController{
 
         Map<String, String> params = Maps.newHashMap();
 
+        //取出支付宝回调request中的信息
         Map requestParams = request.getParameterMap();
         for(Iterator iter = requestParams.keySet().iterator(); iter.hasNext();){
             String name = (String) iter.next();
@@ -131,9 +137,11 @@ public class OrderController{
         logger.info("支付宝回调,sign:{},trade_status:{},参数:{}", params.get("sign"), params.get("trade_status"), params.toString());
 
         //非常重要!!!!!!!!!!验证回调的正确性是否为支付宝发的,并且要避免重复通知
-
+        //文档中要求除去sign和sign_type两个参数,支付宝SDK中已去掉了sign参数
         params.remove("sign_type");
         try {
+            //这个重载方法使用的是RSA1的加解密方式
+            //AlipaySignature.rsaCheckV2(params, Configs.getAlipayPublicKey(), "utf-8");
             boolean alipayRSACheckedV2 = AlipaySignature.rsaCheckV2(params, Configs.getAlipayPublicKey(), "utf-8",Configs.getSignType());
 
             if(!alipayRSACheckedV2){
@@ -143,7 +151,7 @@ public class OrderController{
             logger.error("支付宝验证回调异常", e);
         }
 
-        //todo 验证各种数据
+        //todo 验证各种数据(商户自行验证商品名称\金额......
 
         ServerResponse serverResponse = iOrderService.aliCallback(params);
         if(serverResponse.isSuccess()){

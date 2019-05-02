@@ -12,10 +12,13 @@ public class OrderVo {
     private Long orderNo;
     private BigDecimal payment;
     private Integer paymentType;
+    //方便前端展示,增加描述
     private String paymentTypeDesc;
     private Integer postage;
     private Integer status;
+    //方便前端展示,增加描述
     private String statusDesc;
+    //方便前端展示,时间都改为String类型
     private String paymentTime;
     private String sendTime;
     private String endTime;
@@ -25,10 +28,12 @@ public class OrderVo {
     //订单明细
     private List<OrderItemVo> orderItemVoList;
 
+    //图片路径前缀
     private String imageHost;
+
+    //增加地址信息
     private Integer shippingId;
     private String receiverName;
-
     private ShippingVo shippingVo;
 
     public String getCloseTime() {

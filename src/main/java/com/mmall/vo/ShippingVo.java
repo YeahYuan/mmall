@@ -5,6 +5,7 @@ package com.mmall.vo;
  */
 public class ShippingVo {
 
+    //只取与收货人相关的信息,方便前端展示
     private String receiverName;
     private String receiverPhone;
     private String receiverMobile;
