@@ -1,7 +1,8 @@
 // 各种工具
 //服务器地址
 var conf = {
-    serverHost: "http://www.yuannide.cn:8888/"
+    //注意!最后没有/
+    serverHost: "http://www.yuannide.cn:8888"
 };
 // 添加hogan组件用于渲染
 // var Hogan = require("hogan");
