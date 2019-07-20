@@ -3,36 +3,42 @@
 
 <head>
     <%= require("html-loader!./layout/head-common.html") %>
-        <title>
-            <%= htmlWebpackPlugin.options.title %>-L-MMALL电商平台
-        </title>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>-L-MMALL电商平台
+    </title>
 </head>
 
 <body>
-    <!-- 头部  -->
-    <%= require("html-loader!./layout/nav.html") %>
-        <%= require("html-loader!./layout/header.html") %>
-            <!-- 侧边  -->
-            <div class="crumbs">
-                <div><a href="./index.html" class="link">MMALL</a></a>&gt;
-                    <%= htmlWebpackPlugin.options.title %>
-                </div>
+<!-- 头部  -->
+<%= require("html-loader!./layout/nav.html") %>
+<%= require("html-loader!./layout/header.html") %>
+<!-- 侧边  -->
+<div class="crumbs">
+    <div><a href="./index.html" class="link">MMALL</a>
+        <%= htmlWebpackPlugin.options.title %>
+    </div>
 
+</div>
+<div class="page-wrap w">
+    <!--w 还有清除浮动的功能 因为hide-->
+    <!-- 面包屑导航  -->
+    <%= require("html-loader!./layout/nav-side.html") %>
+    <!--内容  -->
+    <div class="content with-nav">
+        <div class="panel">
+            <div class="describe">
+                这里是yuaner写的一个小网站,前后端分离<br/>
+                后端是自己参考教程完成的,功能完整,已使用Restlet 测试过所有接口<br/>
+                业务模块有用户模块+分类管理模块+商品模块+购物车模块+收货地址模块+支付模块+订单管理模块<br/>
+                接口详情可见<a href="https://gitee.com/imooccode/happymmallwiki/wikis/Home">接口文档</a><br/>
+                前端使用GitHub上AboyL的代码(略有修改),前后端整合过程中遇到了不少问题,目前已上线第一版<br/>
+                仍存在一些问题,比如数据库里的图片显示不了,因为ftp文件服务器里没有这些图片😭<br/>
+                不断完善中,敬请期待!!!有任何建议欢迎来GitHub提建议(链接在最下面哦)
             </div>
-            <div class="page-wrap w">
-                <!--w 还有清除浮动的功能 因为hide-->
-                <!-- 面包屑导航  -->
-                <%=   require("html-loader!./layout/nav-side.html")    %>
-                    <!--内容  -->
-                    <div class="content with-nav">
-                        <div class="panel">
-                            <div class="describe">
-                                这是L写的一个小网站，参考了慕课网的happymmall的设计，略有改动，如果有什么建议欢迎来github提建议
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <%=   require("html-loader!./layout/footer.html")    %>
+        </div>
+    </div>
+</div>
+<%= require("html-loader!./layout/footer.html") %>
 </body>
 
 </html>
