@@ -2,7 +2,8 @@
 //服务器地址
 var conf = {
     //注意!最后没有/
-    serverHost: "http://www.yuannide.cn:8888"
+    //不要加端口号:8888,避免跨域问题
+    serverHost: "http://www.yuannide.cn"
 };
 // 添加hogan组件用于渲染
 // var Hogan = require("hogan");
