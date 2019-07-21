@@ -1,6 +1,5 @@
 # mmall-fe
-网上商城
-
+## 网上商城
 
 若需要测试开发部署：
 修改 src\util\mm.js 中 serverHost 为你的后台项目地址，如：http://www.yuannide.cn:8888/
