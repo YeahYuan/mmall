@@ -81,19 +81,19 @@ var register = {
             error.show(result.msg);
             return result;
         };
-        if (!mm.validate(data.pssword, "notEmpty")) {
+        if (!mm.validate(data.password, "notEmpty")) {
             result.msg = "密码不能为空";
             error.show(result.msg);
             return result;
         };
         //密码不能小于六位
-        if (data.pssword.length < 6) {
+        if (data.password.length < 6) {
             result.msg = "密码不能小于六位";
             error.show(result.msg);
             return result;
         };
         // 验证密码
-        if (data.pssword !== data.passwordConfirm) {
+        if (data.password !== data.passwordConfirm) {
             result.msg = "两次密码输入不一致";
             error.show(result.msg);
             return result;
