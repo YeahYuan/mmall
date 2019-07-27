@@ -49,7 +49,7 @@ var register = {
         // 获取数据
         var data = {
             username: $.trim($("#user-name").val()),
-            pssword: $.trim($("#user-password").val()),
+            password: $.trim($("#user-password").val()),
             passwordConfirm: $.trim($("#user-password-confirm").val()),
             phone: $.trim($("#phone").val()),
             email: $.trim($("#email").val()),

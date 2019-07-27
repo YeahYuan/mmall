@@ -68,8 +68,8 @@ var page = {
     },
     loadDetail: function(data) {
         var html = '';
-        // 因为传入的data的subImages不是数组,我们把他变成数组
-        data.subImages = data.subImages.split(",");
+        // 因为传入的data的subImage不是数组,我们把他变成数组
+        data.subImages = data.subImage.split(",");
         // 进行渲染
         html = mm.renderHtml(template, data);
         $(".page-wrap").html(html);
