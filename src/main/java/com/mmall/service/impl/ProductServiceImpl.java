@@ -51,7 +51,7 @@ public class ProductServiceImpl implements IProductService {
 
             //判断有没有传id,有id是更新操作,无id是插入操作
             if (product.getId() != null) {
-                int rowCount = productMapper.updateByPrimaryKey(product);
+                int rowCount = productMapper.updateByPrimaryKeySelective(product);
                 if (rowCount > 0) {
                     return ServerResponse.createBySuccessMessage("更新产品成功");
                 }
